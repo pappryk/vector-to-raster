@@ -7,7 +7,7 @@ SRC=$(wildcard *.cpp)
 OBJ=$(SRC:.cpp=.o)
 
 program:
-	g++ *.cpp `wx-config --cxxflags --libs` -o wx-app
+	g++ *.cpp `wx-config --cxxflags --libs` -o wx.app
 
 
 class:

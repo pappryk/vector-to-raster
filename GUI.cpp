@@ -207,6 +207,10 @@ MyFrame1::~MyFrame1()
 	PickColorButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame1::PickLineColor), NULL, this);
 	PickColorFillButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame1::PickFillColor), NULL, this);
 
+	for (int i = 0; i < shapes.size(); i++)
+	{
+		delete shapes[i];
+	}
 }
 
 void ReadFile(std::vector<Shape*> &vector, std::string path)
@@ -229,15 +233,15 @@ void ReadFile(std::vector<Shape*> &vector, std::string path)
         {
             double x1, x2, x3, x4, y1, y2, y3, y4;
             file >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> x4 >> y4 >> r1 >> g1 >> b1 >> r2 >> g2 >> b2;
-            Rectangle rectangle = new Triangle(Point(x1, y1), Point(x2, y2), Point(x3, y3), Point(x4, y4), wxColour(r1, g1, b1), wxColour(r2, g2, b2));
+            Rectangle *rectangle = new Rectangle(Point(x1, y1), Point(x2, y2), Point(x3, y3), Point(x4, y4), wxColour(r1, g1, b1), wxColour(r2, g2, b2));
             vector.push_back(rectangle);
         }
 		else if (type == "C")
         {
             double x, y, r;
-            file >> x >> y >> r
-            Rectangle rectangle = new Triangle(Point(x1, y1), Point(x2, y2), Point(x3, y3), Point(x4, y4), wxColour(r1, g1, b1), wxColour(r2, g2, b2));
-            vector.push_back(rectangle);
+            file >> x >> y >> r >> r1 >> g1 >> b1 >> r2 >> g2 >> b2;
+            Circle *circle = new Circle(Point(x, y), r, wxColour(r1, g1, b1), wxColour(r2, g2, b2));
+            vector.push_back(circle);
         }
     }
 
@@ -253,7 +257,7 @@ void MyFrame1::OpenFromTxt(wxCommandEvent& event)
 	wxFileDialog WxOpenFileDialog(this, wxT("Choose a file"), wxT(""), wxT(""), wxT("npc file (*.npc)|*.npc"), wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 	if (WxOpenFileDialog.ShowModal() == wxID_OK)
 	{
-		std::ifstream file(WxOpenFileDialog.GetPath().ToAscii());
+		ReadFile(shapes, WxOpenFileDialog.GetPath().ToStdString());
 		
 	}
 }

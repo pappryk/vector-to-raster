@@ -1,6 +1,7 @@
 #include <wx/wx.h>
 #include "GUI.h"
 
+
 class MyApp : public wxApp {
 
 public:

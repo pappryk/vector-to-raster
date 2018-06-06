@@ -64,6 +64,8 @@ protected:
 	wxTextCtrl* HeightLabel;
 	wxPanel* m_panel1;
 
+	std::vector<Shape*> shapes;
+
 	// Virtual event handlers, overide them in your derived class
 	virtual void OpenFromTxt(wxCommandEvent& event);
 	virtual void SaveToBmp(wxCommandEvent& event) { event.Skip(); }
