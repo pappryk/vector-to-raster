@@ -23,6 +23,8 @@
 #include <wx/panel.h>
 #include <wx/frame.h>
 #include <wx/filedlg.h>
+#include <wx/dcclient.h>
+
 
 #include "Shape.h"
 
@@ -83,6 +85,7 @@ public:
 
 	~MyFrame1();
 
+	void Paint(wxUpdateUIEvent& event);
 };
 
 #endif //__NONAME_H__

@@ -173,11 +173,14 @@ MyFrame1::MyFrame1(wxWindow* parent, wxWindowID id, const wxString& title, const
 	m_panel1 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 	m_panel1->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 
+
+
+
 	paper_field->Add(m_panel1, 2, wxEXPAND | wxALL, 5);
 
 
 	bSizer1->Add(paper_field, 4, wxEXPAND, 5);
-
+	
 
 	this->SetSizer(bSizer1);
 	this->Layout();
@@ -185,6 +188,8 @@ MyFrame1::MyFrame1(wxWindow* parent, wxWindowID id, const wxString& title, const
 	this->Centre(wxBOTH);
 
 	// Connect Events
+
+	m_panel1->Connect( wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MyFrame1::Paint ), NULL, this );
 	LoadTxTButton->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame1::OpenFromTxt), NULL, this);
 	SaveToBMPbutton->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame1::SaveToBmp), NULL, this);
 	SaveToTXTbutton->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame1::SaveToTxt), NULL, this);
@@ -259,5 +264,20 @@ void MyFrame1::OpenFromTxt(wxCommandEvent& event)
 	{
 		ReadFile(shapes, WxOpenFileDialog.GetPath().ToStdString());
 		
+	}
+}
+
+
+void MyFrame1::Paint(wxUpdateUIEvent& event)
+{
+	wxClientDC dc(m_panel1);
+	dc.SetBackground(wxBrush(wxColour(0, 0, 0)));
+	dc.SetPen(wxPen(wxColour(150, 150, 150)));  
+
+	
+
+	for (int i = 0; i < 100; i++)
+	{
+		dc.DrawPoint(i, i);
 	}
 }
